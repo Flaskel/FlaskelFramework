@@ -1,0 +1,38 @@
+from app.Controller import Controller
+from app.Models.{model_name} import {model_name}
+from flask import render_template, request, redirect, url_for
+
+class {model_name}Controller(Controller):
+
+    def index():
+        return render_template(
+            "{table_name}/index.html",
+            {model_name_lower}={model_name}.query.all()
+        )
+
+    def create():
+        return render_template("{table_name}/create.html")
+
+    def store():
+        {model_name}().create(request.get_json())
+        return redirect(url_for("{table_name}.index"))
+
+    def show(id):
+        return render_template(
+            "{table_name}/show.html",
+            {model_name_lower}={model_name}.query.get(id)
+        )
+
+    def edit(id):
+        return render_template(
+            "{table_name}/edit.html",
+            {model_name_lower}={model_name}.query.get(id)
+        )
+
+    def update(id):
+        {model_name}.query.get(id).update(request.get_json())
+        return redirect(url_for("{table_name}.index"))
+
+    def delete(id):
+        {model_name}.query.get(id).delete()
+        return redirect(url_for("{table_name}.index"))

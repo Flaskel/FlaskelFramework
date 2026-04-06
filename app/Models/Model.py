@@ -1,4 +1,6 @@
-from Database.database import db
+from app.Database.database import db
+import os
+import importlib.util
 
 class Model(db.Model):
 
@@ -9,6 +11,7 @@ class Model(db.Model):
         self._conditions = []
         self._model_cls = self.__class__
 
+    # ---------------- QUERY BUILDER ----------------
     def where(self, column, value, operator="="):
 
         if operator not in self._allowed_operators:
@@ -32,19 +35,14 @@ class Model(db.Model):
 
             if operator == "=":
                 query = query.filter(column_attr == value)
-
             elif operator == ">":
                 query = query.filter(column_attr > value)
-
             elif operator == "<":
                 query = query.filter(column_attr < value)
-
             elif operator == ">=":
                 query = query.filter(column_attr >= value)
-
             elif operator == "<=":
                 query = query.filter(column_attr <= value)
-
             elif operator == "!=":
                 query = query.filter(column_attr != value)
 
@@ -74,3 +72,27 @@ class Model(db.Model):
             column.name: getattr(self, column.name)
             for column in self.__table__.columns
         }
+    
+    # ---------------- MIGRATION RUNNER ----------------
+    def run_migrations():
+        migration_path = "app/Database/Migrations"
+
+        if not os.path.exists(migration_path):
+            print("No migrations found")
+            return
+
+        files = sorted(os.listdir(migration_path))
+
+        for file in files:
+            if file.endswith(".py"):
+                full_path = os.path.join(migration_path, file)
+
+                spec = importlib.util.spec_from_file_location(file, full_path)
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
+
+                if hasattr(module, "upgrade"):
+                    print(f"Running migration: {file}")
+                    module.upgrade()
+
+        print("Migrations completed!")
