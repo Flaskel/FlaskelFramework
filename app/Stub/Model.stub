@@ -1,0 +1,20 @@
+from app.Database.database import db
+from app.Models.Model import Model
+from sqlalchemy.sql import func
+
+
+class {model_name}(Model, db.Model):
+
+    __tablename__ = "{table_name}"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    created_at = db.Column(
+        db.DateTime(timezone=True),
+        server_default=func.now()
+    )
+
+    updated_at = db.Column(
+        db.DateTime(timezone=True),
+        onupdate=func.now()
+    )
