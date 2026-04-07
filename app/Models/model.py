@@ -1,6 +1,6 @@
-
-
 from database.database import db
+import os
+import importlib.util
 
 
 class Model(db.Model):
@@ -82,3 +82,34 @@ class Model(db.Model):
             column.name: getattr(self, column.name)
             for column in self.__table__.columns
         }
+
+    # ---------------- MIGRATION RUNNER ----------------
+    @staticmethod
+    def run_migrations():
+        migration_path = "app/Database/Migrations"
+
+        if not os.path.exists(migration_path):
+            print("No migrations found")
+            return
+
+        files = sorted(os.listdir(migration_path))
+
+        for file in files:
+            if file.endswith(".py"):
+                full_path = os.path.join(migration_path, file)
+
+                try:
+                    spec = importlib.util.spec_from_file_location(file, full_path)
+                    module = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(module)
+
+                    if hasattr(module, "upgrade") and callable(module.upgrade):
+                        print(f"Running migration: {file}")
+                        module.upgrade()
+                    else:
+                        print(f"Skipping {file} (no upgrade function)")
+
+                except Exception as e:
+                    print(f"Error in migration {file}: {e}")
+
+        print("Migrations completed!")
