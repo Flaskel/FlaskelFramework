@@ -1,0 +1,16 @@
+{% extends "layout/auth.html" %}
+
+{% block content %}
+<div class="relative flex min-h-[520px] flex-col justify-center overflow-hidden rounded-md bg-white/60 px-6 py-16 text-center font-semibold backdrop-blur-lg dark:bg-black/50">
+    <div class="pointer-events-none absolute left-1/2 top-0 aspect-square w-full max-w-[520px] -translate-x-1/2 rounded-full bg-[linear-gradient(180deg,#4361EE_0%,rgba(67,97,238,0)_50.73%)] opacity-10"></div>
+    <div class="relative mx-auto w-full max-w-3xl">
+        <img
+            :src="$store.app.theme === 'dark' || $store.app.isDarkMode ? '{{ url_for('static', filename='assets/media/error/404-dark.svg') }}' : '{{ url_for('static', filename='assets/media/error/404-light.svg') }}'"
+            alt="404"
+            class="mx-auto -mt-10 w-full max-w-xs object-cover md:-mt-14 md:max-w-xl"
+        />
+        <p class="mt-5 text-base dark:text-white">The page you requested was not found!</p>
+        <a href="{{ url_for('index') }}" class="btn btn-gradient mx-auto !mt-7 w-max border-0 uppercase shadow-none">Home</a>
+    </div>
+</div>
+{% endblock %}

@@ -5,17 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <title>VRISTO - Multipurpose Tailwind Dashboard Template</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" type="image/x-icon" href="favicon.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='assets/media/logo.svg') }}" />
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/perfect-scrollbar.min.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
-        <link defer rel="stylesheet" type="text/css" media="screen" href="assets/css/animate.css" />
-        <script src="assets/js/perfect-scrollbar.min.js"></script>
-        <script defer src="assets/js/popper.min.js"></script>
-        <script defer src="assets/js/tippy-bundle.umd.min.js"></script>
-        <script defer src="assets/js/sweetalert.min.js"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='assets/css/style.css') }}" />
     </head>
 
     <body
@@ -61,32 +53,35 @@
         </div>
 
         <div class="main-container min-h-screen text-black dark:text-white-dark">
-            <!-- start main content section -->
-            <div class="relative flex min-h-screen items-center justify-center overflow-hidden">
+            <div x-data="auth">
+                <div class="absolute inset-0">
+                    <img src="{{ url_for('static', filename='assets/media/auth/bg-gradient.png') }}" alt="image" class="h-full w-full object-cover" />
+                </div>
+
                 <div
-                    class="px-6 py-16 text-center font-semibold before:container before:absolute before:left-1/2 before:aspect-square before:-translate-x-1/2 before:rounded-full before:bg-[linear-gradient(180deg,#4361EE_0%,rgba(67,97,238,0)_50.73%)] before:opacity-10 md:py-20"
+                    class="relative flex min-h-screen items-center justify-center bg-[url(../media/auth/map.png)] bg-cover bg-center bg-no-repeat px-6 py-10 dark:bg-[#060818] sm:px-16"
                 >
-                    <div class="relative">
-                        <img
-                            :src="$store.app.theme === 'dark' || $store.app.isDarkMode ? 'assets/images/error/404-dark.svg' : 'assets/images/error/404-light.svg'"
-                            alt="404"
-                            class="mx-auto -mt-10 w-full max-w-xs object-cover md:-mt-14 md:max-w-xl"
-                        />
-                        <p class="mt-5 text-base dark:text-white">The page you requested was not found!</p>
-                        <a href="index.html" class="btn btn-gradient mx-auto !mt-7 w-max border-0 uppercase shadow-none">Home</a>
+                    <img src="{{ url_for('static', filename='assets/media/auth/coming-soon-object1.png') }}" alt="image" class="absolute left-0 top-1/2 h-full max-h-[893px] -translate-y-1/2" />
+                    <img src="{{ url_for('static', filename='assets/media/auth/coming-soon-object2.png') }}" alt="image" class="absolute left-24 top-0 h-40 md:left-[30%]" />
+                    <img src="{{ url_for('static', filename='assets/media/auth/coming-soon-object3.png') }}" alt="image" class="absolute right-0 top-0 h-[300px]" />
+                    <img src="{{ url_for('static', filename='assets/media/auth/polygon-object.svg') }}" alt="image" class="absolute bottom-0 end-[28%]" />
+                    <div
+                        class="relative w-full max-w-[870px] rounded-md bg-[linear-gradient(45deg,#fff9f9_0%,rgba(255,255,255,0)_25%,rgba(255,255,255,0)_75%,_#fff9f9_100%)] p-2 dark:bg-[linear-gradient(52.22deg,#0E1726_0%,rgba(14,23,38,0)_18.66%,rgba(14,23,38,0)_51.04%,rgba(14,23,38,0)_80.07%,#0E1726_100%)]"
+                    >
+                        {% block content %}
+                        {% endblock %}
                     </div>
                 </div>
             </div>
-            <!-- end main content section -->
         </div>
 
-        <script src="assets/js/alpine-collaspe.min.js"></script>
-        <script src="assets/js/alpine-persist.min.js"></script>
-        <script defer src="assets/js/alpine-ui.min.js"></script>
-        <script defer src="assets/js/alpine-focus.min.js"></script>
-        <script defer src="assets/js/alpine.min.js"></script>
+        <script src="{{ url_for('static', filename='assets/js/alpine-collaspe.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='assets/js/alpine-persist.min.js') }}"></script>
+        <script defer src="{{ url_for('static', filename='assets/js/alpine-ui.min.js') }}"></script>
+        <script defer src="{{ url_for('static', filename='assets/js/alpine-focus.min.js') }}"></script>
+        <script defer src="{{ url_for('static', filename='assets/js/alpine.min.js') }}"></script>
 
-        <script src="assets/js/custom.js"></script>
+        <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
 
         <script>
             // main section
@@ -111,6 +106,91 @@
                         document.body.scrollTop = 0;
                         document.documentElement.scrollTop = 0;
                     },
+                }));
+
+                Alpine.data('auth', () => ({
+                    languages: [
+                        {
+                            id: 1,
+                            key: 'Chinese',
+                            value: 'zh',
+                        },
+                        {
+                            id: 2,
+                            key: 'Danish',
+                            value: 'da',
+                        },
+                        {
+                            id: 3,
+                            key: 'English',
+                            value: 'en',
+                        },
+                        {
+                            id: 4,
+                            key: 'French',
+                            value: 'fr',
+                        },
+                        {
+                            id: 5,
+                            key: 'German',
+                            value: 'de',
+                        },
+                        {
+                            id: 6,
+                            key: 'Greek',
+                            value: 'el',
+                        },
+                        {
+                            id: 7,
+                            key: 'Hungarian',
+                            value: 'hu',
+                        },
+                        {
+                            id: 8,
+                            key: 'Italian',
+                            value: 'it',
+                        },
+                        {
+                            id: 9,
+                            key: 'Japanese',
+                            value: 'ja',
+                        },
+                        {
+                            id: 10,
+                            key: 'Polish',
+                            value: 'pl',
+                        },
+                        {
+                            id: 11,
+                            key: 'Portuguese',
+                            value: 'pt',
+                        },
+                        {
+                            id: 12,
+                            key: 'Russian',
+                            value: 'ru',
+                        },
+                        {
+                            id: 13,
+                            key: 'Spanish',
+                            value: 'es',
+                        },
+                        {
+                            id: 14,
+                            key: 'Swedish',
+                            value: 'sv',
+                        },
+                        {
+                            id: 15,
+                            key: 'Turkish',
+                            value: 'tr',
+                        },
+                        {
+                            id: 16,
+                            key: 'Arabic',
+                            value: 'ae',
+                        },
+                    ],
                 }));
             });
         </script>

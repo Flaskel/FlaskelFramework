@@ -5,17 +5,17 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <title>VRISTO - Multipurpose Tailwind Dashboard Template</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" type="image/x-icon" href="favicon.png" />
+        <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='assets/media/logo.svg') }}" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/perfect-scrollbar.min.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
-        <link defer rel="stylesheet" type="text/css" media="screen" href="assets/css/animate.css" />
-        <script src="assets/js/perfect-scrollbar.min.js"></script>
-        <script defer src="assets/js/popper.min.js"></script>
-        <script defer src="assets/js/tippy-bundle.umd.min.js"></script>
-        <script defer src="assets/js/sweetalert.min.js"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='assets/css/perfect-scrollbar.min.css') }}" />
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='assets/css/style.css') }}" />
+        <link defer rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='assets/css/animate.css') }}" />
+        <script src="{{ url_for('static', filename='assets/js/perfect-scrollbar.min.js') }}"></script>
+        <script defer src="{{ url_for('static', filename='assets/js/popper.min.js') }}"></script>
+        <script defer src="{{ url_for('static', filename='assets/js/tippy-bundle.umd.min.js') }}"></script>
+        <script defer src="{{ url_for('static', filename='assets/js/sweetalert.min.js') }}"></script>
     </head>
 
     <body
@@ -374,7 +374,7 @@
                     <div class="h-full bg-white dark:bg-[#0e1726]">
                         <div class="flex items-center justify-between px-4 py-3">
                             <a href="index.html" class="main-logo flex shrink-0 items-center">
-                                <img class="ml-[5px] w-8 flex-none" src="assets/images/logo.svg" alt="image" />
+                            <img class="ml-[5px] w-8 flex-none" src="{{ url_for('static', filename='assets/media/logo.svg') }}" alt="image" />
                                 <span class="align-middle text-2xl font-semibold ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light lg:inline">VRISTO</span>
                             </a>
                             <a
@@ -436,7 +436,7 @@
                                 </button>
                                 <ul x-cloak x-show="activeDropdown === 'dashboard'" x-collapse class="sub-menu text-gray-500">
                                     <li>
-                                        <a href="index.html" class="active">Sales</a>
+                                        <a href="/" class="active">Sales</a>
                                     </li>
                                     <li>
                                         <a href="analytics.html">Analytics</a>
@@ -1078,7 +1078,7 @@
                             </h2>
 
                             <li class="menu nav-item">
-                                <a href="tables.html" class="nav-link group">
+                                <a href="/tables" class="nav-link group">
                                     <div class="flex items-center">
                                         <svg
                                             class="shrink-0 group-hover:!text-primary"
@@ -1246,7 +1246,7 @@
                                 </button>
                                 <ul x-cloak x-show="activeDropdown === 'forms'" x-collapse class="sub-menu text-gray-500">
                                     <li>
-                                        <a href="forms-basic.html">Basic</a>
+                                        <a href="/forms">Basic</a>
                                     </li>
                                     <li>
                                         <a href="forms-input-group.html">Input Group</a>
@@ -1497,16 +1497,16 @@
                                 </button>
                                 <ul x-cloak x-show="activeDropdown === 'authentication'" x-collapse class="sub-menu text-gray-500">
                                     <li>
-                                        <a href="auth-boxed-signin.html" target="_blank">Login Boxed</a>
+                                        <a href="/sign-in" target="_blank">Login Boxed</a>
                                     </li>
                                     <li>
-                                        <a href="auth-boxed-signup.html" target="_blank">Register Boxed</a>
+                                        <a href="/sign-up" target="_blank">Register Boxed</a>
                                     </li>
                                     <li>
                                         <a href="auth-boxed-lockscreen.html" target="_blank">Unlock Boxed</a>
                                     </li>
                                     <li>
-                                        <a href="auth-boxed-password-reset.html" target="_blank">Recover ID Boxed</a>
+                                        <a href="{{ url_for('password_reset') }}" target="_blank">Recover ID Boxed</a>
                                     </li>
                                     <li>
                                         <a href="auth-cover-login.html" target="_blank">Login Cover</a>
@@ -1518,7 +1518,7 @@
                                         <a href="auth-cover-lockscreen.html" target="_blank">Unlock Cover</a>
                                     </li>
                                     <li>
-                                        <a href="auth-cover-password-reset.html" target="_blank">Recover ID Cover</a>
+                                        <a href="{{ url_for('password_reset') }}" target="_blank">Recover ID Cover</a>
                                     </li>
                                 </ul>
                             </li>
@@ -1578,7 +1578,7 @@
                         <div class="relative flex w-full items-center bg-white px-5 py-2.5 dark:bg-[#0e1726]">
                             <div class="horizontal-logo flex items-center justify-between ltr:mr-2 rtl:ml-2 lg:hidden">
                                 <a href="index.html" class="main-logo flex shrink-0 items-center">
-                                    <img class="inline w-8 ltr:-ml-1 rtl:-mr-1" src="assets/images/logo.svg" alt="image" />
+                                                        <img class="inline w-8 ltr:-ml-1 rtl:-mr-1" src="{{ url_for('static', filename='assets/media/logo.svg') }}" alt="image" />
                                     <span
                                         class="hidden align-middle text-2xl font-semibold transition-all duration-300 ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light md:inline"
                                         >VRISTO</span
@@ -1809,7 +1809,7 @@
                                         @click="toggle"
                                     >
                                         <img
-                                            :src="`assets/images/flags/${$store.app.locale.toUpperCase()}.svg`"
+                                            :src="'{{ url_for('static', filename='assets/media/flags/') }}' + $store.app.locale.toUpperCase() + '.svg'"
                                             alt="image"
                                             class="h-5 w-5 rounded-full object-cover"
                                         />
@@ -1831,7 +1831,7 @@
                                                 >
                                                     <img
                                                         class="h-5 w-5 rounded-full object-cover"
-                                                        :src="`assets/images/flags/${item.value.toUpperCase()}.svg`"
+                                                        :src="'{{ url_for('static', filename='assets/media/flags/') }}' + item.value.toUpperCase() + '.svg'"
                                                         alt="image"
                                                     />
                                                     <span class="ltr:ml-3 rtl:mr-3" x-text="item.key"></span>
@@ -1873,7 +1873,7 @@
                                         <li class="mb-5">
                                             <div class="relative overflow-hidden rounded-t-md !p-5 text-white">
                                                 <div
-                                                    class="absolute inset-0 h-full w-full bg-[url('../images/menu-heade.jpg')] bg-cover bg-center bg-no-repeat"
+                                                    class="absolute inset-0 h-full w-full bg-[url('../media/menu-heade.jpg')] bg-cover bg-center bg-no-repeat"
                                                 ></div>
                                                 <h4 class="relative z-10 text-lg font-semibold">Messages</h4>
                                             </div>
@@ -2004,7 +2004,7 @@
                                                         <div class="relative h-12 w-12">
                                                             <img
                                                                 class="h-12 w-12 rounded-full object-cover"
-                                                                :src="`assets/images/${notification.profile}`"
+                                                                :src="'{{ url_for('static', filename='assets/media/') }}' + notification.profile"
                                                                 alt="image"
                                                             />
                                                             <span class="absolute bottom-0 right-[6px] block h-2 w-2 rounded-full bg-success"></span>
@@ -2072,7 +2072,7 @@
                                         <span
                                             ><img
                                                 class="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100"
-                                                src="assets/images/user-profile.jpeg"
+                                                                            src="{{ url_for('static', filename='assets/media/user-profile.jpeg') }}"
                                                 alt="image"
                                         /></span>
                                     </a>
@@ -2086,7 +2086,7 @@
                                         <li>
                                             <div class="flex items-center px-4 py-4">
                                                 <div class="flex-none">
-                                                    <img class="h-10 w-10 rounded-md object-cover" src="assets/images/user-profile.jpeg" alt="image" />
+                                                    <img class="h-10 w-10 rounded-md object-cover" src="{{ url_for('static', filename='assets/media/user-profile.jpeg') }}" alt="image" />
                                                 </div>
                                                 <div class="truncate ltr:pl-4 rtl:pr-4">
                                                     <h4 class="text-base">
@@ -2255,7 +2255,7 @@
                                 </a>
                                 <ul class="sub-menu">
                                     <li>
-                                        <a href="index.html" class="active">Sales</a>
+                                        <a href="/" class="active">Sales</a>
                                     </li>
                                     <li>
                                         <a href="analytics.html">Analytics</a>
@@ -2587,7 +2587,7 @@
                                 </a>
                                 <ul class="sub-menu">
                                     <li>
-                                        <a href="tables.html">Tables</a>
+                                        <a href="/tables">Tables</a>
                                     </li>
                                     <li class="relative">
                                         <a href="javascript:;"
@@ -2691,7 +2691,7 @@
                                 </a>
                                 <ul class="sub-menu">
                                     <li>
-                                        <a href="forms-basic.html">Basic</a>
+                                        <a href="/forms">Basic</a>
                                     </li>
                                     <li>
                                         <a href="forms-input-group.html">Input Group</a>
@@ -2875,7 +2875,7 @@
                                                 <a href="auth-cover-login.html" target="_blank">Login Cover</a>
                                             </li>
                                             <li>
-                                                <a href="auth-boxed-signin.html" target="_blank">Login Boxed</a>
+                                                <a href="/sign-in" target="_blank">Login Boxed</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -2901,7 +2901,7 @@
                                                 <a href="auth-cover-register.html" target="_blank">Register Cover</a>
                                             </li>
                                             <li>
-                                                <a href="auth-boxed-signup.html" target="_blank">Register Boxed</a>
+                                                <a href="/sign-up" target="_blank">Register Boxed</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -2924,10 +2924,10 @@
                                             class="absolute top-0 z-[10] hidden min-w-[180px] rounded bg-white p-0 py-2 text-dark shadow ltr:left-[95%] rtl:right-[95%] dark:bg-[#1b2e4b] dark:text-white-dark"
                                         >
                                             <li>
-                                                <a href="auth-cover-password-reset.html" target="_blank">Recover ID Cover</a>
+                                                <a href="{{ url_for('password_reset') }}" target="_blank">Recover ID Cover</a>
                                             </li>
                                             <li>
-                                                <a href="auth-boxed-password-reset.html" target="_blank">Recover ID Boxed</a>
+                                                <a href="{{ url_for('password_reset') }}" target="_blank">Recover ID Boxed</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -3010,8 +3010,13 @@
                     </div>
                 </header>
                 <!-- end header section -->
-                {% block content %}
-                {% endblock %}
+
+                <div class="dvanimation animate__animated p-6" :class="[$store.app.animation]">
+                    <!-- start main content section -->
+                    {% block content %}{% endblock %}
+                    <!-- end main content section -->
+                </div>
+
                 <!-- start footer section -->
                 <div class="mt-auto p-6 pt-0 text-center dark:text-white-dark ltr:sm:text-left rtl:sm:text-right">
                     © <span id="footer-year">2022</span>. Vristo All rights reserved.
@@ -3020,13 +3025,13 @@
             </div>
         </div>
 
-        <script src="assets/js/alpine-collaspe.min.js"></script>
-        <script src="assets/js/alpine-persist.min.js"></script>
-        <script defer src="assets/js/alpine-ui.min.js"></script>
-        <script defer src="assets/js/alpine-focus.min.js"></script>
-        <script defer src="assets/js/alpine.min.js"></script>
-        <script src="assets/js/custom.js"></script>
-        <script defer src="assets/js/apexcharts.js"></script>
+        <script src="{{ url_for('static', filename='assets/js/alpine-collaspe.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='assets/js/alpine-persist.min.js') }}"></script>
+        <script defer src="{{ url_for('static', filename='assets/js/alpine-ui.min.js') }}"></script>
+        <script defer src="{{ url_for('static', filename='assets/js/alpine-focus.min.js') }}"></script>
+        <script defer src="{{ url_for('static', filename='assets/js/alpine.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
+        <script defer src="{{ url_for('static', filename='assets/js/apexcharts.js') }}"></script>
 
         <script>
             document.addEventListener('alpine:init', () => {
@@ -3243,39 +3248,44 @@
 
                 // content section
                 Alpine.data('sales', () => ({
+                    renderCharts() {
+                        this.$refs.revenueChart.innerHTML = '';
+                        this.$refs.salesByCategory.innerHTML = '';
+                        this.$refs.dailySales.innerHTML = '';
+                        this.$refs.totalOrders.innerHTML = '';
+
+                        this.revenueChart = new ApexCharts(this.$refs.revenueChart, this.revenueChartOptions);
+                        this.salesByCategory = new ApexCharts(this.$refs.salesByCategory, this.salesByCategoryOptions);
+                        this.dailySales = new ApexCharts(this.$refs.dailySales, this.dailySalesOptions);
+                        this.totalOrders = new ApexCharts(this.$refs.totalOrders, this.totalOrdersOptions);
+
+                        this.revenueChart.render();
+                        this.salesByCategory.render();
+                        this.dailySales.render();
+                        this.totalOrders.render();
+                    },
                     init() {
                         isDark = this.$store.app.theme === 'dark' || this.$store.app.isDarkMode ? true : false;
                         isRtl = this.$store.app.rtlClass === 'rtl' ? true : false;
 
-                        const revenueChart = null;
-                        const salesByCategory = null;
-                        const dailySales = null;
-                        const totalOrders = null;
+                        this.revenueChart = null;
+                        this.salesByCategory = null;
+                        this.dailySales = null;
+                        this.totalOrders = null;
 
-                        // revenue
-                        setTimeout(() => {
-                            this.revenueChart = new ApexCharts(this.$refs.revenueChart, this.revenueChartOptions);
-                            this.$refs.revenueChart.innerHTML = '';
-                            this.revenueChart.render();
-
-                            // sales by category
-                            this.salesByCategory = new ApexCharts(this.$refs.salesByCategory, this.salesByCategoryOptions);
-                            this.$refs.salesByCategory.innerHTML = '';
-                            this.salesByCategory.render();
-
-                            // daily sales
-                            this.dailySales = new ApexCharts(this.$refs.dailySales, this.dailySalesOptions);
-                            this.$refs.dailySales.innerHTML = '';
-                            this.dailySales.render();
-
-                            // total orders
-                            this.totalOrders = new ApexCharts(this.$refs.totalOrders, this.totalOrdersOptions);
-                            this.$refs.totalOrders.innerHTML = '';
-                            this.totalOrders.render();
-                        }, 300);
+                        // Let layout settle before mounting charts to reduce synchronous reflow work.
+                        requestAnimationFrame(() => {
+                            requestAnimationFrame(() => {
+                                this.renderCharts();
+                            });
+                        });
 
                         this.$watch('$store.app.theme', () => {
                             isDark = this.$store.app.theme === 'dark' || this.$store.app.isDarkMode ? true : false;
+
+                            if (!this.revenueChart) {
+                                return;
+                            }
 
                             this.revenueChart.updateOptions(this.revenueChartOptions);
                             this.salesByCategory.updateOptions(this.salesByCategoryOptions);
@@ -3285,6 +3295,11 @@
 
                         this.$watch('$store.app.rtlClass', () => {
                             isRtl = this.$store.app.rtlClass === 'rtl' ? true : false;
+
+                            if (!this.revenueChart) {
+                                return;
+                            }
+
                             this.revenueChart.updateOptions(this.revenueChartOptions);
                         });
                     },
