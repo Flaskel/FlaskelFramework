@@ -1,0 +1,52 @@
+from app.Controller import Controller
+from app.Models.{model_name} import {model_name}
+from app.Database.database import db
+from flask import render_template, request, redirect, url_for, abort
+
+
+class {model_name}Controller(Controller):
+
+    @staticmethod
+    def index():
+        return render_template("{table_name}/index.html",
+            {model_name_lower}={model_name}.query.all()
+        )
+
+    @staticmethod
+    def create():
+        return render_template("{table_name}/create.html")
+
+    @staticmethod
+    def store():
+        data = request.get_json() or request.form or abort(400)
+        obj = {model_name}(**data)
+        db.session.add(obj); db.session.commit()
+        return redirect(url_for("{table_name}.index"))
+
+    @staticmethod
+    def show(id):
+        obj = {model_name}.query.get(id) or abort(404)
+        return render_template("{table_name}/show.html", {model_name_lower}=obj)
+
+    @staticmethod
+    def edit(id):
+        obj = {model_name}.query.get(id) or abort(404)
+        return render_template("{table_name}/edit.html", {model_name_lower}=obj)
+
+    @staticmethod
+    def update(id):
+        obj = {model_name}.query.get(id) or abort(404)
+        data = request.get_json() or request.form or abort(400)
+
+        for k, v in data.items():
+            if hasattr(obj, k):
+                setattr(obj, k, v)
+
+        db.session.commit()
+        return redirect(url_for("{table_name}.index"))
+
+    @staticmethod
+    def delete(id):
+        obj = {model_name}.query.get(id) or abort(404)
+        db.session.delete(obj); db.session.commit()
+        return redirect(url_for("{table_name}.index"))
