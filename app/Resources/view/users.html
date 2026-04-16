@@ -1,0 +1,345 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+<div x-data="usersPage()" class="p-5">
+
+    <!-- Breadcrumb -->
+    <ul class="flex space-x-2 rtl:space-x-reverse mb-5">
+        <li>
+            <a href="/dashboard" class="text-primary hover:underline">Dashboard</a>
+        </li>
+        <li class="before:content-['/'] before:mx-2"> Users</li>
+    </ul>
+
+    {% include "components/session-message.html" %}
+
+    <!-- FILTER CARD -->
+    <div class="panel mb-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 items-end">
+
+            <!-- Name -->
+            <div>
+                <label class="block mb-1 font-semibold">Name</label>
+                <input type="text" x-model="searchName"
+                    placeholder="Search by name"
+                    class="form-input w-full" />
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label class="block mb-1 font-semibold">Email</label>
+                <input type="text" x-model="searchEmail"
+                    placeholder="Search by email"
+                    class="form-input w-full" />
+            </div>
+
+            <!-- Mobile -->
+            <div>
+                <label class="block mb-1 font-semibold">Mobile</label>
+                <input type="text" x-model="searchMobile"
+                    placeholder="Search by mobile"
+                    class="form-input w-full" />
+            </div>
+
+            <!-- Status -->
+            <div>
+                <label class="block mb-1 font-semibold">Status</label>
+                <select x-model="status" class="form-select w-full">
+                    <option value="all">All</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-2 h-fit">
+                <button @click="applyFilter" class="btn btn-primary w-full">
+                    Apply
+                </button>
+
+                <button @click="resetFilter" class="btn btn-outline-primary w-full">
+                    Reset
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- USERS TABLE -->
+    <div class="panel">
+
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold">Users</h2>
+
+            <a href="/users/create"
+               class="btn btn-primary flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <g fill="none" stroke="currentColor" stroke-width="1.0" stroke-opacity="0.8"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2s7.071 0 8.535 1.464C22 4.93 22 7.286 22 12s0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" d="M15 12h-3m0 0H9m3 0V9m0 3v3"/></g>
+                </svg> 
+                Create New
+            </a>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table-hover w-full">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <template x-for="user in paginatedUsers" :key="user.id">
+                        <tr>
+                            <td x-text="user.name"></td>
+                            <td x-text="user.email"></td>
+                            <td x-text="user.mobile"></td>
+
+                            <!-- Status -->
+                            <td>
+                                <span
+                                    :class="user.status ? 'badge badge-outline-success' : 'badge badge-outline-danger'"
+                                    x-text="user.status ? 'Active' : 'Inactive'">
+                                </span>
+                            </td>
+
+                            <!-- Actions -->
+                            <td class="text-center">
+                                <div class="flex justify-center gap-2">
+
+                                    <!-- EDIT -->
+                                    <a :href="`/users/edit/${user.id}`" x-tooltip="Edit"
+                                        class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-success text-success hover:bg-success/10">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 text-success">
+                                            <path
+                                                d="M15.2869 3.15178L14.3601 4.07866L5.83882 12.5999L5.83881 12.5999C5.26166 13.1771 4.97308 13.4656 4.7249 13.7838C4.43213 14.1592 4.18114 14.5653 3.97634 14.995C3.80273 15.3593 3.67368 15.7465 3.41556 16.5208L2.32181 19.8021L2.05445 20.6042C1.92743 20.9852 2.0266 21.4053 2.31063 21.6894C2.59466 21.9734 3.01478 22.0726 3.39584 21.9456L4.19792 21.6782L7.47918 20.5844L7.47919 20.5844C8.25353 20.3263 8.6407 20.1973 9.00498 20.0237C9.43469 19.8189 9.84082 19.5679 10.2162 19.2751C10.5344 19.0269 10.8229 18.7383 11.4001 18.1612L11.4001 18.1612L19.9213 9.63993L20.8482 8.71306C22.3839 7.17735 22.3839 4.68748 20.8482 3.15178C19.3125 1.61607 16.8226 1.61607 15.2869 3.15178Z"
+                                                stroke="currentColor" stroke-width="1.5" />
+                                            <path opacity="0.5"
+                                                d="M14.36 4.07812C14.36 4.07812 14.4759 6.04774 16.2138 7.78564C17.9517 9.52354 19.9213 9.6394 19.9213 9.6394M4.19789 21.6777L2.32178 19.8015"
+                                                stroke="currentColor" stroke-width="1.5" />
+                                        </svg>
+                                    </a>
+
+                                    <!-- ACTIVATE / DEACTIVATE -->
+                                    <form method="POST" :action="`/users/toggle/${user.id}`">
+                                        <button
+                                            type="submit"
+                                            x-tooltip="Status"
+                                            class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-info text-info hover:bg-info/10">
+
+                                            <template x-if="user.status">
+                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                    class="h-4.5 w-4.5">
+                                                    <circle cx="12" cy="12" r="9"
+                                                        stroke="currentColor" stroke-width="1.5" opacity="0.5" />
+                                                    <path d="M7 7L17 17" stroke="currentColor" stroke-width="1.5"
+                                                        stroke-linecap="round" />
+                                                </svg>
+                                            </template>
+
+                                            <template x-if="!user.status">
+                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                    class="h-4.5 w-4.5">
+                                                    <circle cx="12" cy="12" r="9"
+                                                        stroke="currentColor" stroke-width="1.5"
+                                                        opacity="0.5" />
+                                                    <path d="M8.5 12.5L11 15L16 9" stroke="currentColor"
+                                                        stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </template>
+
+                                        </button>
+                                    </form>
+
+                                    <!-- DELETE -->
+                                    <button @click="confirmDelete(user.id)" x-tooltip="Delete"
+                                        class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-danger text-danger transition-colors hover:bg-danger/10">
+
+                                        <!-- ICON -->
+                                        <svg width="24" height="24" viewBox="0 0 24 24"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5">
+                                            <path d="M20.5 6H3.5" stroke="currentColor" stroke-width="1.5"/>
+                                            <path d="M18.8 8.5L18.3 15.4C18.1 18 18 19.3 17.2 20.1C16.3 21 15 21 12.3 21H11.6C8.9 21 7.6 21 6.7 20.1C5.9 19.3 5.8 18 5.6 15.4L5.1 8.5"
+                                                stroke="currentColor" stroke-width="1.5"/>
+                                        </svg>
+
+                                    </button>
+                                </div>
+                            </td>
+
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <!-- PAGINATION -->
+            <div class="flex justify-between items-center mt-4">
+
+                <!-- Left -->
+                <div class="flex items-center gap-3">
+                    <span class="text-sm whitespace-nowrap">
+                        Showing <span x-text="start + 1"></span> to 
+                        <span x-text="Math.min(end, filteredUsers.length)"></span> 
+                        of <span x-text="filteredUsers.length"></span> entries
+                    </span>
+
+                    <select x-model="perPage" @change="changePage(1)" class="form-select min-w-[100px] pr-10 appearance-none">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                    </select>
+                </div>
+
+                <!-- Right -->
+                <div class="flex items-center gap-2">
+
+                    <!-- Prev -->
+                    <button @click="changePage(currentPage - 1)"
+                        :disabled="currentPage === 1"
+                        class="btn btn-outline-primary btn-sm">
+                        ‹
+                    </button>
+
+                    <!-- Page Numbers -->
+                    <template x-for="page in totalPages" :key="page">
+                        <button
+                            @click="changePage(page)"
+                            :class="currentPage === page ? 'btn btn-primary btn-sm' : 'btn btn-outline-primary btn-sm'">
+                            <span x-text="page"></span>
+                        </button>
+                    </template>
+
+                    <!-- Next -->
+                    <button @click="changePage(currentPage + 1)"
+                        :disabled="currentPage === totalPages"
+                        class="btn btn-outline-primary btn-sm">
+                        ›
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+function usersPage() {
+    return {
+        searchName: '',
+        searchEmail: '',
+        searchMobile: '',
+        status: 'all',
+        users: {{ users | tojson }},
+
+        filteredUsers: [],
+        paginatedUsers: [],
+
+        currentPage: 1,
+        perPage: 10,
+
+        get totalPages() {
+            return Math.ceil(this.filteredUsers.length / this.perPage);
+        },
+
+        get start() {
+            return (this.currentPage - 1) * this.perPage;
+        },
+
+        get end() {
+            return this.start + this.perPage;
+        },
+
+        init() {
+            this.filteredUsers = this.users;
+            this.updatePagination();
+        },
+
+        updatePagination() {
+            this.paginatedUsers = this.filteredUsers.slice(this.start, this.end);
+        },
+
+        changePage(page) {
+            if (page < 1 || page > this.totalPages) return;
+            this.currentPage = page;
+            this.updatePagination();
+        },
+
+        applyFilter() {
+            this.filteredUsers = this.users.filter(user => {
+
+                let matchName =
+                    user.name.toLowerCase().includes(this.searchName.toLowerCase());
+
+                let matchEmail =
+                    user.email.toLowerCase().includes(this.searchEmail.toLowerCase());
+
+                let matchMobile =
+                    user.mobile.includes(this.searchMobile);
+
+                let matchStatus =
+                    this.status === 'all' ||
+                    (this.status === 'active' && user.status) ||
+                    (this.status === 'inactive' && !user.status);
+
+                return matchName && matchEmail && matchMobile && matchStatus;
+            });
+
+            this.currentPage = 1;
+            this.updatePagination();
+        },
+
+        resetFilter() {
+            this.searchName = '';
+            this.searchEmail = '';
+            this.searchMobile = '';
+            this.status = 'all';
+            this.filteredUsers = this.users;
+
+            this.currentPage = 1;
+            this.updatePagination();
+        }
+    }
+}
+function confirmDelete(userId) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this user?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ef4444",
+        cancelButtonColor: "#6b7280",
+        confirmButtonText: "Yes, Delete",
+        cancelButtonText: "Cancel"
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            fetch(`/users/delete/${userId}`, {
+                method: "POST"
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "/users?deleted=1";
+                }
+            });
+
+        }
+    });
+}
+</script>
+<script src="{{ url_for('static', filename='js/sweetalert.min.js') }}"></script>
+
+{% endblock %}

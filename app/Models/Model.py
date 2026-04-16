@@ -1,3 +1,5 @@
+import uuid
+from werkzeug.security import generate_password_hash
 from app.Database.database import db
 from sqlalchemy.orm import Query
 
@@ -89,3 +91,26 @@ class Model(db.Model):
     @classmethod
     def all(cls):
         return cls._base_query().all()
+    
+
+    # -----------------------------
+    # CREATE (with UUID + HASH)
+    # -----------------------------
+    @classmethod
+    def create(cls, **kwargs):
+        obj = cls()
+
+        obj.id = str(uuid.uuid4())
+
+        for key, value in kwargs.items():
+            if key == "password":
+                if not value:
+                    raise ValueError("Password cannot be empty")
+                value = generate_password_hash(value)
+
+            setattr(obj, key, value)
+
+        db.session.add(obj)
+        db.session.commit()
+
+        return obj
