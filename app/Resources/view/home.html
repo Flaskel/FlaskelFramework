@@ -1,0 +1,24 @@
+{% extends "layout/auth.html" %}
+
+{% block content %}
+<div class="relative flex min-h-screen items-center justify-center overflow-hidden">
+    <div
+        class="px-6 py-16 text-center font-semibold before:container before:absolute before:left-1/2 before:aspect-square before:-translate-x-1/2 before:rounded-full before:bg-[linear-gradient(180deg,#4361EE_0%,rgba(67,97,238,0)_50.73%)] before:opacity-10 md:py-20">
+        <div class="relative">
+            <img :src="$store.app.theme === 'dark' || $store.app.isDarkMode ? 'assets/media/error/maintenence-dark.svg' : 'assets/media/error/maintenence-light.svg'"
+                alt="maintenence" class="mx-auto -mt-10 w-full max-w-xs object-cover md:-mt-20 md:max-w-lg" />
+            <div class="-mt-8 font-semibold dark:text-white">
+                <h2 class="mb-5 text-3xl font-bold text-primary md:text-5xl">Building Something Powerful</h2>
+                <h4 class="mb-7 text-xl sm:text-2xl">Your next-generation dashboard experience is taking shape.</h4>
+                <p class="text-base">
+                    We are developing a scalable Flask-based framework that brings clean architecture, built-in tools, and developer-friendly workflows together. From model generation to user management, everything is designed to accelerate development and maintain clarity.
+                </p>
+            </div>
+            <div class="mt-7 flex justify-center gap-4">
+                <a href="/sign-up" class="btn btn-gradient border-0 uppercase shadow-none">Sign Up</a>
+                <a href="/login" class="btn btn-gradient border-0 uppercase shadow-none">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+<div class="p-5">
+
+    <!-- Breadcrumb -->
+    <ul class="flex space-x-2 mb-5">
+        <li>
+            <a href="/dashboard" class="text-primary hover:underline">Dashboard</a>
+        </li>
+        <li class="before:content-['/'] before:mx-2">
+            <a href="/users" class="text-primary hover:underline">Users</a>
+        </li>
+        <li class="before:content-['/'] before:mx-2"> Edit</li>
+    </ul>
+
+    {% include "components/session-message.html" %}
+
+    <div class="panel max-w-2xl">
+
+        <h2 class="text-lg font-semibold mb-5">Edit User</h2>
+
+        <form method="POST">
+
+            <!-- NAME -->
+            <div class="mb-4">
+                <label class="block mb-1 font-semibold">Name</label>
+                <input type="text" name="name"
+                       value="{{ user.name }}"
+                       class="form-input w-full" required>
+            </div>
+
+            <!-- EMAIL -->
+            <div class="mb-4">
+                <label class="block mb-1 font-semibold">Email</label>
+                <input type="email" name="email"
+                       value="{{ user.email }}"
+                       class="form-input w-full" required>
+            </div>
+
+            <!-- MOBILE -->
+            <div class="mb-6">
+                <label class="block mb-1 font-semibold">Mobile</label>
+                <input type="text" name="mobile"
+                       value="{{ user.mobile }}"
+                       class="form-input w-full">
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="flex gap-3">
+                <button type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+
+                <a href="/users" class="btn btn-outline-primary">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="space-y-4 mb-5">
+            {% for category, message in messages %}
+
+                {% if category == 'success' %}
+                <!-- SUCCESS ALERT -->
+                <div
+                    class="relative flex items-center rounded border border-success bg-success-light p-3.5 text-success ltr:border-l-[64px] rtl:border-r-[64px] dark:bg-success-dark-light"
+                >
+                    <span class="absolute inset-y-0 m-auto h-6 w-6 text-white ltr:-left-11 rtl:-right-11">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6">
+                            <path opacity="0.5"
+                                d="M5.31171 10.7615C8.23007 5.58716 9.68925 3 12 3C14.3107 3 15.7699 5.58716 18.6883 10.7615L19.0519 11.4063C21.4771 15.7061 22.6897 17.856 21.5937 19.428C20.4978 21 17.7864 21 12.3637 21H11.6363C6.21356 21 3.50217 21 2.40626 19.428C1.31034 17.856 2.52291 15.7061 4.94805 11.4063L5.31171 10.7615Z"
+                                stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M12 8V13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <circle cx="12" cy="16" r="1" fill="currentColor"/>
+                        </svg>
+                    </span>
+
+                    <span class="ltr:pr-2 rtl:pl-2">
+                        <strong class="ltr:mr-1 rtl:ml-1">Success!</strong>{{ message }}
+                    </span>
+
+                    <!-- CLOSE BUTTON -->
+                    <button type="button"
+                        onclick="this.parentElement.remove()"
+                        class="hover:opacity-80 ltr:ml-auto rtl:mr-auto">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                {% endif %}
+
+
+                {% if category == 'error' %}
+                <!-- ERROR ALERT -->
+                <div
+                    class="relative flex items-center rounded border border-danger bg-danger-light p-3.5 text-danger before:absolute before:top-1/2 before:-mt-2 before:inline-block before:border-b-8 before:border-r-8 before:border-t-8 before:border-b-transparent before:border-r-inherit before:border-t-transparent ltr:border-r-[64px] ltr:before:right-0 rtl:border-l-[64px] rtl:before:left-0 rtl:before:rotate-180 dark:bg-danger-dark-light"
+                >
+                    <span class="absolute inset-y-0 m-auto h-6 w-6 text-white ltr:-right-11 rtl:-left-11">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6">
+                            <circle opacity="0.5" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M12 7V13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <circle cx="12" cy="16" r="1" fill="currentColor"/>
+                        </svg>
+                    </span>
+
+                    <span class="ltr:pr-2 rtl:pl-2">
+                        <strong class="ltr:mr-1 rtl:ml-1">Error!</strong>{{ message }}
+                    </span>
+
+                    <!-- CLOSE BUTTON -->
+                    <button type="button"
+                        onclick="this.parentElement.remove()"
+                        class="hover:opacity-80 ltr:ml-auto rtl:mr-auto">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
